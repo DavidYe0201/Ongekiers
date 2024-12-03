@@ -1,47 +1,53 @@
 import React, {Component} from 'react';
 import Grid from '@mui/material/Grid2';
+import data from "./data.json"
+
 class Ongeki extends Component {
-    
     constructor(props) {
         super(props);
         this.state = {
-          scores: [],
+          scores: [],         
           recents: [],
           isLoading: true,
           error: null,
+          userName: null,
+          version: null
         };
       }
-
-      componentDidMount() {
-        const headers = new Headers();
-
-        fetch('https://kamai.tachi.ac/api/v1/users/me/games/ongeki/Single/pbs/all',  {headers})
-            .then(response => response.json())
-            .then(data => this.setState({ scores: data }));
-
-        fetch('https://kamai.tachi.ac/api/v1/users/me/games/ongeki/Single/scores/recent',  {headers})
-            .then(response => response.json())
-            .then(data => this.setState({ recents: data }));
-      }
-
+    
     getImageUrl = (title) => {
-        /*
         for (let i = 0; i < data.songs.length; i++) {
             if (title === data.songs[i].title) {
                 return data.songs[i].imageName;
             }
         }
         return "default.png";
-        */
     }
+    componentDidMount() {
+        if (this.props.scores && this.state.scores === null) {
+            this.setState({scores: this.props.scores})
+            this.setState({recents: this.props.recents})
+            this.setState({version: this.props.version})
+        }
+      }
+    
+      componentDidUpdate(prevProps) {
+        if ((this.props.scores !== prevProps.scores) && this.state.scores === null) {
+            this.setState({scores: this.props.scores})
+            this.setState({recents: this.props.recents})
+            this.setState({version: this.props.version})
+        }
+      }
 
     createSongJson = (i, json) => {
         let newEntry = {} 
+        console.log("chart", json[i].song)
+        console.log("jsin", json[i])
         newEntry.songName = json[i].song.title
-        newEntry.chartRating = json[i].chart.level
+        newEntry.chartRating = json[i].chart.levelNum
         newEntry.score = json[i].score.scoreData.score 
         newEntry.yourRating = json[i].score.calculatedData.rating
-       //newEntry.image = getImageUrl(json[i].__related.song.title)
+        newEntry.image = this.getImageUrl(json[i].song.title)
         newEntry.fullBell = json[i].score.scoreData.score.bellLamp
         newEntry.fullCombo =json[i].score.scoreData.score.noteLamp
         return newEntry;
@@ -107,14 +113,15 @@ class Ongeki extends Component {
         return sortedData;
     }
     test = () => {
-        if (this.state.scores.length === 0)
+        if (this.state.scores.length === 0) {
             return null;
+        }
        const combinedJson = this.combineJson(this.state.scores)
         let bestArray = []
         let bestJson = []
         let latestVersionArray = []
         let latestJson = []
-        let latestVersion = "bright MEMORY Act.3"
+        let latestVersion = this.state.version
         let recentArray = []
         let recentJson = []
 
@@ -165,6 +172,8 @@ class Ongeki extends Component {
 
     scoreCreation = (i) => {
         let allJson = this.test();
+        if (allJson === null) 
+            return null;
         let scores = []
         scores.push(allJson[3].toFixed(2));
         scores.push(allJson[4].toFixed(2));
@@ -190,17 +199,19 @@ class Ongeki extends Component {
 
     gridCreation = (i) => {
         let allJson = this.test()
+        if (allJson === null) 
+            return null;
         let json = allJson[i]
         const bestRow = []
         for (let i = 0; i < json.length; i++) {
             let oneSong = []
-            oneSong.push(json[i].songName)
+            oneSong.push("Title: ", json[i].songName)
             oneSong.push(<br/>)
-            oneSong.push(json[i].chartRating)
+            oneSong.push("Level: ", json[i].chartRating)
             oneSong.push(<br/>)
-            oneSong.push(json[i].score)
+            oneSong.push("Score: ",json[i].score)
             oneSong.push(<br/>)
-            oneSong.push(json[i].yourRating)
+            oneSong.push("Rating: ", json[i].yourRating)
             oneSong.push(<br/>)
             oneSong.push(json[i].fullBell)
             oneSong.push(<br/>)
@@ -208,27 +219,41 @@ class Ongeki extends Component {
             oneSong.push(<br/>)
             bestRow.push(oneSong)
         }
+
         const gridRow = []
         const mystyle = {
             border: "solid",
             height: "150px",
-            width: "150px",
-            fontSize: "14px",
+            width: "100px",
+            fontSize: "12px",
+            color: "#fff",
+            textShadow: "1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000",
+            float: "right"
           };
+
+        const divStyle = {
+            height: "150px",
+            width: "250px",
+            display: "flex"
+        } 
+
         for (let i = 0; i < bestRow.length; i++) {
-            gridRow.push(<Grid item xs={12/5} style={mystyle}>
-                    {bestRow[i]}
-                </Grid>)
+            gridRow.push(
+                <div style={divStyle}>
+                     <div style={{backgroundImage : `url(${process.env.PUBLIC_URL}/img/cover-m/${json[i].image})`, backgroundSize: "contain", height: "150px", width: "150px", float:"left"}}></div>
+                     <Grid item xs={12/5} style={mystyle}>
+                        {console.log(bestRow[i])}
+                            {bestRow[i]}
+                    </Grid>
+                </div>
+        )
         }
         return gridRow
     }
 
-
-    
     render() {
-        const apiState = this.state.scores;
-        const apiState2 = this.state.recents;
-
+        const apiState = this.props.scores;
+        const apiState2 = this.props.recents;
         if ((apiState.length === 0) || (apiState2.length === 0)){
             return (
                 <p>Loading...</p>
@@ -239,8 +264,16 @@ class Ongeki extends Component {
             let latest = this.latestGrid();
             let recent = this.recentGrid()
             let scores = this.scoreCreation()
+            if ((best === null) || (latest === null) || (recent === null) || (scores === null)) {
+                this.setState({scores: this.props.scores})
+                this.setState({recents: this.props.recents})    
+                this.setState({version: this.props.version})    
+                return (
+                    <p>Scores are loading...</p>
+                )
+            }
             return (
-                        <div style={{width: 900}}>
+                        <div style={{width: "70%"}}>
                         <p>Total: {scores[3]}</p>
                         <p style={{textAlign: "left"}}>Best: {scores[0]}</p>
                                 <Grid container spacing={2}>

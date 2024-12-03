@@ -24,3 +24,6 @@ yarn-error.log*
 
 # image files 
 src/img
+src/testJsons
+
+src/.env
