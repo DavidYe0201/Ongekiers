@@ -41,8 +41,8 @@ class Ongeki extends Component {
 
     createSongJson = (i, json) => {
         let newEntry = {} 
-        console.log("chart", json[i].song)
-        console.log("jsin", json[i])
+        // console.log("chart", json[i].song)
+        // console.log("jsin", json[i])
         newEntry.songName = json[i].song.title
         newEntry.chartRating = json[i].chart.levelNum
         newEntry.score = json[i].score.scoreData.score 
@@ -242,7 +242,7 @@ class Ongeki extends Component {
                 <div style={divStyle}>
                      <div style={{backgroundImage : `url(${process.env.PUBLIC_URL}/img/cover-m/${json[i].image})`, backgroundSize: "contain", height: "150px", width: "150px", float:"left"}}></div>
                      <Grid item xs={12/5} style={mystyle}>
-                        {console.log(bestRow[i])}
+                        {/* {console.log(bestRow[i])} */}
                             {bestRow[i]}
                     </Grid>
                 </div>
@@ -274,6 +274,7 @@ class Ongeki extends Component {
             }
             return (
                         <div style={{width: "70%"}}>
+                        <p><button onClick={this.props.handleBack}>Back</button></p>
                         <p>Total: {scores[3]}</p>
                         <p style={{textAlign: "left"}}>Best: {scores[0]}</p>
                                 <Grid container spacing={2}>

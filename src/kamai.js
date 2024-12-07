@@ -17,6 +17,15 @@ class Kamai extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    const userName = sessionStorage.getItem("userName");
+    if (userName) {
+      this.setState({userName: userName}, () => {
+        this.apiCall()
+      })
+    }
+  }
+
   apiCall = () => {
       const headers = new Headers();
       headers.append('Authorization', `Bearer ${process.env.REACT_APP_API_KEY}`)
@@ -54,6 +63,21 @@ class Kamai extends Component {
       submitted: true,
       errorUsername: null
     })
+    sessionStorage.setItem("userName", this.state.userName);
+  }
+
+  handleBack = (e) => {
+    sessionStorage.removeItem("userName");
+    this.setState({
+      scores: [],
+      recents: [],
+      isLoading: true,
+      error: null,
+      userName: null,
+      value: null,
+      version: "bright MEMORY Act.3",
+      errorUsername: null
+    })
   }
 
   render() {    
@@ -64,7 +88,7 @@ class Kamai extends Component {
         }
         else {
           return (
-            <Ongeki scores={this.state.scores} recents={this.state.recents} version={this.state.version}></Ongeki>
+            <Ongeki scores={this.state.scores} handleBack={this.handleBack} recents={this.state.recents} version={this.state.version}></Ongeki>
           )
         }
     }
