@@ -17,12 +17,44 @@ class Kamai extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  handleVersion = (urlVersion, type) => { // Switch between version strings for use in calling API or formatting in URL
+    const versionMap = {
+      "1": { formatted: "bright MEMORY Act.1", pretty: "act1" },
+      "2": { formatted: "bright MEMORY Act.2", pretty: "act2" },
+      "3": { formatted: "bright MEMORY Act.3", pretty: "act3" }
+    };
+  
+    let result = { formatted: "bright MEMORY Act.3", pretty: "act3" };
+  
+    Object.keys(versionMap).forEach((key) => {
+      if (urlVersion.includes(key)) {
+        result = versionMap[key];
+      }
+    });
+  
+    return result[type];
+  };
+
   componentDidMount() {
-    const userName = sessionStorage.getItem("userName");
-    if (userName) {
-      this.setState({userName: userName}, () => {
+    if (this.props.params.name && this.props.params.version) { // Check URL param /name/version on mount and update state
+      let version = this.handleVersion(this.props.params.version, "formatted")
+      this.setState({userName: this.props.params.name, version: version}, () => {
         this.apiCall()
       })
+    }
+    else if (this.props.params.name){ // For /name only
+      this.setState({userName: this.props.params.name}, () => {
+        this.apiCall()
+      })
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    let versions = ["act1", "act2", "act3"] // Update version param in URL if formatted differently than actx
+
+    if (this.props.params.version && (!versions.includes(this.props.params.version))) {
+      let standardizedVersion = this.handleVersion(this.props.params.version, "pretty")
+      this.props.navigate(`/${this.state.userName}/${standardizedVersion}`, { replace: true })
     }
   }
 
@@ -63,11 +95,11 @@ class Kamai extends Component {
       submitted: true,
       errorUsername: null
     })
-    sessionStorage.setItem("userName", this.state.userName);
+    let standardizedVersion = this.handleVersion(this.state.version, "pretty")
+    this.props.navigate(`/${this.state.userName}/${standardizedVersion}`)
   }
 
   handleBack = (e) => {
-    sessionStorage.removeItem("userName");
     this.setState({
       scores: [],
       recents: [],
@@ -78,6 +110,7 @@ class Kamai extends Component {
       version: "bright MEMORY Act.3",
       errorUsername: null
     })
+    this.props.navigate(`/`);
   }
 
   render() {    
