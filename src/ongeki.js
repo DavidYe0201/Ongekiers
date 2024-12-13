@@ -41,8 +41,6 @@ class Ongeki extends Component {
 
     createSongJson = (i, json) => {
         let newEntry = {} 
-        // console.log("chart", json[i].song)
-        // console.log("jsin", json[i])
         newEntry.songName = json[i].song.title
         newEntry.chartRating = json[i].chart.levelNum
         newEntry.score = json[i].score.scoreData.score 
@@ -50,6 +48,7 @@ class Ongeki extends Component {
         newEntry.image = this.getImageUrl(json[i].song.title)
         newEntry.fullBell = json[i].score.scoreData.score.bellLamp
         newEntry.fullCombo =json[i].score.scoreData.score.noteLamp
+        newEntry.timeStamp = new Date(json[i].score.timeAchieved).toLocaleDateString("en-US")
         return newEntry;
     }
 
@@ -213,6 +212,8 @@ class Ongeki extends Component {
             oneSong.push(<br/>)
             oneSong.push("Rating: ", json[i].yourRating)
             oneSong.push(<br/>)
+            oneSong.push(json[i].timeStamp)
+            oneSong.push(<br/>)
             oneSong.push(json[i].fullBell)
             oneSong.push(<br/>)
             oneSong.push(json[i].fullCombo)
@@ -242,7 +243,6 @@ class Ongeki extends Component {
                 <div style={divStyle}>
                      <div style={{backgroundImage : `url(${process.env.PUBLIC_URL}/img/cover-m/${json[i].image})`, backgroundSize: "contain", height: "150px", width: "150px", float:"left"}}></div>
                      <Grid item xs={12/5} style={mystyle}>
-                        {/* {console.log(bestRow[i])} */}
                             {bestRow[i]}
                     </Grid>
                 </div>
