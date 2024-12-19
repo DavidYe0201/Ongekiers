@@ -85,7 +85,7 @@ class Ongeki extends Component {
                     Object.assign(combinedJson[i], {song: json[0].body.songs[j]})
             }
         }
-        const fiftyRecent = combinedJson.slice(-30)
+        const fiftyRecent = combinedJson.slice(0, 30)
         const sortedData = this.sortByRating(fiftyRecent)
         console.log(sortedData)
         return sortedData;
@@ -147,7 +147,7 @@ class Ongeki extends Component {
         const recentDataJson = this.combineRecentJson(this.state.recents)
         let set5 = new Set();
         for (let i = 0; i < recentDataJson.length; i++) {
-            if ((recentArray.length !== 10) && (!set5.has(recentDataJson[i].score.songID))) {
+            if ((recentArray.length !== 10)) {
                 set5.add(recentDataJson[i].score.songID)
                 recentJson.push(this.createSongJson(i, recentDataJson))
                 recentArray.push(recentDataJson[i].score.calculatedData.rating)
