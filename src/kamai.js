@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Ongeki from './ongeki.js';
+import Leaderboard from "./leaderboard.js";
+import { Link } from 'react-router-dom'
 class Kamai extends Component {
 
   constructor(props) {
@@ -77,6 +79,8 @@ class Kamai extends Component {
       this.setState({errorUsername: this.state.userName})
   }
 
+
+
   handleChange = (e) => {
     this.setState({
       userName: e.target.value,
@@ -127,6 +131,11 @@ class Kamai extends Component {
     }
     return (
       <div>
+      <div>
+          <button>
+          <Link to='/leaderboard'>Leaderboard</Link>
+          </button>
+      </div>
       <form onSubmit={this.handleSubmit}>        
         <label>
           Enter username:
