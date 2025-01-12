@@ -32,7 +32,7 @@ class Leaderboard extends Component {
     
     getUsernameFromUserID = (id) => {
         for (let i = 0; i < 100; i++) {
-            if (id == this.state.leaderboardData.body.users[i].id) 
+            if (id === this.state.leaderboardData.body.users[i].id) 
                 return this.state.leaderboardData.body.users[i].username
         }
         return "Username doesn't exist"
@@ -53,7 +53,7 @@ class Leaderboard extends Component {
 
     render() {   
         let table; 
-        if (this.state.leaderboardData.length != 0) {
+        if (this.state.leaderboardData.length !== 0) {
             table = this.generateGrid()
         }
         return (
