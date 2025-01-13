@@ -134,6 +134,9 @@ class Kamai extends Component {
           <button>
           <Link to='/leaderboard'>Leaderboard</Link>
           </button>
+          <button>
+          <Link to='/scoresimulator'>Score Simulator</Link>
+          </button>
       </div>
       <form onSubmit={this.handleSubmit}>        
         <label>
