@@ -12,7 +12,9 @@ class ScoreSimulator extends Component {
           bell: 1,
           totalBell: 1,
           damage: 0,
-          score: 0
+          score: 0,
+          chart: 1,
+          rating: 0
         };
       }
 
@@ -24,9 +26,27 @@ class ScoreSimulator extends Component {
         let bellScore = ((this.state.bell)/(this.state.totalBell)) * 60000
         let damageScore = this.state.damage * 10
         let totalScore = this.state.score
-        totalScore = noteScore + bellScore - damageScore        
+        totalScore = noteScore + bellScore - damageScore
+
+        let musicRate;
+        if (this.state.score >= 1007500) {
+            musicRate = 2;
+            } else if (this.state.score >= 1000000) {
+            musicRate = 1.5 + (this.state.score - 1000000)/15000;
+            } else if (this.state.score >= 990000) {
+            musicRate = 1 + (this.state.score - 990000)/20000;
+            } else if (this.state.score >= 970000) {
+            musicRate = (this.state.score - 970000)/20000;
+            } else {
+            musicRate = (this.state.score - 970000)/17500;
+        }
+        musicRate += (this.state.chart * 1)
         if ((totalScore !== this.state.score) && !(isNaN(totalScore))) {
             this.setState({score: totalScore});
+        }
+
+        if ((musicRate !== this.state.rating) && !(isNaN(totalScore))) {
+            this.setState({rating: musicRate });
         }
     }
 
@@ -34,9 +54,6 @@ class ScoreSimulator extends Component {
         this.setState({[e.target.name]: e.target.value});
     }  
      
-    calculateScore = () => {
-        console.log(this.state)
-    }    
 
     render() {
         const divStyle = {
@@ -75,8 +92,17 @@ class ScoreSimulator extends Component {
                 Damage
             </label>
             <input type="number"  name={"damage"} value={this.state.damage} onChange={this.handleChange} />
+            <label>
+                Chart Level
+            </label>
+            <input type="number" name={"chart"} value={this.state.chart} onChange={this.handleChange} />
+
+
+
         </form>
-         Score: {(this.state.score).toFixed(2)}
+         Score: {(this.state.score).toFixed(2)}{"\n"}
+
+         Rating: {(this.state.rating).toFixed(2)}
             </div>
         )
     }
