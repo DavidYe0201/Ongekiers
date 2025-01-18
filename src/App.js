@@ -18,19 +18,13 @@ function App() {
       <header className="App-header">
         <Router>
         <Navbar></Navbar>
-
           <Routes>
-            
             <Route path="/:name/:version?" element={<KamaiWithRouter />} />
             <Route path="/" element={<KamaiWithRouter />} />
             <Route path="/leaderboard" element={<LeaderboardWithRouter />} />
             <Route
               path="/scoresimulator"
               element={<ScoreSimulatorWithRouter />}
-            />
-              <Route
-              path="/*"
-              element={<NavbarWithRouter />}
             />
           </Routes>
         </Router>

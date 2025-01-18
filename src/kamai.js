@@ -54,7 +54,7 @@ class Kamai extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     let versions = ["act1", "act2", "act3"]; // Update version param in URL if formatted differently than actx
 
     if (

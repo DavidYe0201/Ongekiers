@@ -1,7 +1,8 @@
 import React, { Component, createRef  } from "react";
 import Grid from "@mui/material/Grid2";
 import data from "./data.json";
-import { toPng } from 'html-to-image';
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 class Ongeki extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class Ongeki extends Component {
       error: null,
       userName: null,
       version: null,
-      recentScore: 0
     };
   }
 
@@ -181,7 +181,6 @@ class Ongeki extends Component {
     scores.push(allJson[4].toFixed(2));
     scores.push(allJson[5].toFixed(2));
     scores.push(allJson[6].toFixed(2));
-    this.setState({recentScore: allJson[5].toFixed(2)})
     return scores;
   };
 
@@ -294,6 +293,7 @@ class Ongeki extends Component {
         link.click();
         document.getElementById("imageDiv").removeChild(para);
         document.getElementById("imageDiv").removeChild(para2);
+        document.getElementById("imageDiv").removeChild(para3);
       })
       .catch((err) => {
         console.log(err);
@@ -327,7 +327,7 @@ class Ongeki extends Component {
             
       return (
         <div style={{ width: "70%"}} >
-            <div>
+            <div >
                 <label>
                 <select
                 value={this.state.version}
