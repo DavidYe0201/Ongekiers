@@ -3,7 +3,6 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import { Link } from "react-router-dom";
 
 class Leaderboard extends Component {
   constructor(props) {
@@ -72,10 +71,7 @@ class Leaderboard extends Component {
     };
     
     return (
-      <div>
-        <button>
-            <Link to="/">Back</Link>
-        </button>    
+      <div> 
         <Table aria-label="simple table" sx={{"& .MuiTableRow-root:hover": {backgroundColor: "primary.light"}}}>
           <TableRow>
             <TableCell>Ranking</TableCell>

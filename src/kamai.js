@@ -157,14 +157,6 @@ class Kamai extends Component {
     }
     return (
       <div>
-        <div>
-          <button style={{margin: "1%"}}>
-            <Link to="/leaderboard">Leaderboard</Link>
-          </button>
-          <button>
-            <Link to="/scoresimulator">Score Simulator</Link>
-          </button>
-        </div>
         <form onSubmit={this.handleSubmit}>
           <label>
             Enter username:

@@ -315,8 +315,7 @@ class Ongeki extends Component {
             
       return (
         <div style={{ width: "70%"}} >
-            <div >
-                <button style={{margin: "1%"}} onClick={this.props.handleBack}>Back</button>
+            <div>
                 <label>
                 <select
                 value={this.state.version}
