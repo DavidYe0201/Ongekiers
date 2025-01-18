@@ -24,7 +24,6 @@ class Leaderboard extends Component {
       .catch((error) => {
         throw error;
       });
-    console.log(this.state.leaderboardData);
   };
 
   async componentWillMount() {

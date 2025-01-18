@@ -14,6 +14,7 @@ class Ongeki extends Component {
       error: null,
       userName: null,
       version: null,
+      recentScore: 0
     };
   }
 
@@ -83,7 +84,6 @@ class Ongeki extends Component {
     }
     const fiftyRecent = combinedJson.slice(0, 30);
     const sortedData = this.sortByRating(fiftyRecent);
-    console.log(sortedData);
     return sortedData;
   };
 
@@ -181,6 +181,7 @@ class Ongeki extends Component {
     scores.push(allJson[4].toFixed(2));
     scores.push(allJson[5].toFixed(2));
     scores.push(allJson[6].toFixed(2));
+    this.setState({recentScore: allJson[5].toFixed(2)})
     return scores;
   };
 
@@ -269,8 +270,18 @@ class Ongeki extends Component {
 
   onButtonClick = () => {
     const para = document.createElement("p");
+    const para2 = document.createElement("p");
+    const para3 = document.createElement("p");
+
+    para.style.cssText = "font-size:15px;text-align:left"
+    para2.style.cssText = "font-size:15px;text-align:left"
     para.innerText = "Generated on https://ongekiers.netlify.app/";
+    para2.innerText = "I'm ngl I have no idea how to calculate the recent score so it's not in the image but my calculated score is " + this.state.recentScore
+    para3.innerText = this.props.userName
+    document.getElementById("imageDiv").prepend(para2);
     document.getElementById("imageDiv").prepend(para);
+    document.getElementById("imageDiv").prepend(para3);
+
     const { current } = this.ref;
     if (current === null) {
       return;
@@ -282,6 +293,7 @@ class Ongeki extends Component {
         link.href = dataUrl;
         link.click();
         document.getElementById("imageDiv").removeChild(para);
+        document.getElementById("imageDiv").removeChild(para2);
       })
       .catch((err) => {
         console.log(err);
