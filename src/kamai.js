@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Ongeki from "./ongeki.js";
-import { Link } from "react-router-dom";
 
 class Kamai extends Component {
   constructor(props) {
