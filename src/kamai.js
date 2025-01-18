@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Ongeki from "./ongeki.js";
 import { Link } from "react-router-dom";
+
 class Kamai extends Component {
   constructor(props) {
     super(props);
@@ -149,6 +150,7 @@ class Kamai extends Component {
             handleBack={this.handleBack}
             recents={this.state.recents}
             version={this.state.version}
+            userName={this.state.userName}
           ></Ongeki>
         );
       }

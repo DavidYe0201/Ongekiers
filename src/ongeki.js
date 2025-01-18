@@ -1,10 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, createRef  } from "react";
 import Grid from "@mui/material/Grid2";
 import data from "./data.json";
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 class Ongeki extends Component {
   constructor(props) {
     super(props);
+    this.ref = createRef();
     this.state = {
       scores: [],
       recents: [],
@@ -265,6 +268,29 @@ class Ongeki extends Component {
     });
   };
 
+  onButtonClick = () => {
+    const para = document.createElement("p");
+    para.innerText = "Generated on https://ongekiers.netlify.app/";
+    document.getElementById("imageDiv").prepend(para);
+    const { current } = this.ref;
+    if (current === null) {
+      return;
+    }
+    toPng(current, { cacheBust: true, backgroundColor: "#282c34" })
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.download = this.props.userName + 'OngekiScore' + Date.now() + '.jpeg';
+        link.href = dataUrl;
+        link.click();
+        document.getElementById("imageDiv").removeChild(para);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
+
   render() {
     const apiState = this.props.scores;
     const apiState2 = this.props.recents;
@@ -286,11 +312,12 @@ class Ongeki extends Component {
         this.setState({ version: this.props.version });
         return <p>Scores are loading...</p>;
       }
+
+            
       return (
-        <div style={{ width: "70%" }}>
+        <div style={{ width: "70%"}} >
             <div >
                 <button style={{margin: "1%"}} onClick={this.props.handleBack}>Back</button>
-
                 <label>
                 <select
                 value={this.state.version}
@@ -301,10 +328,12 @@ class Ongeki extends Component {
                 <option value="bright MEMORY Act.1">Act 1</option>
                 </select>
             </label>
+            <button style={{margin: "1%"}} onClick={this.onButtonClick}> Save as Image </button>
             </div>
 
 
-          <p>Total: {scores[3]}</p>
+        <div id="imageDiv" ref={this.ref} style={{padding: "5px"}}>
+        <p>Total: {scores[3]}</p>
           <p style={{ textAlign: "left" }}>Best: {scores[0]}</p>
           <Grid container spacing={2}>
             {best}
@@ -313,6 +342,8 @@ class Ongeki extends Component {
           <Grid container spacing={2}>
             {latest}
           </Grid>
+
+        </div>
           <p style={{ textAlign: "left" }}>Recent: {scores[2]}</p>
           <Grid container spacing={2}>
             {recent}
