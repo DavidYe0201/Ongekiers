@@ -1,8 +1,7 @@
 import React, { Component, createRef  } from "react";
 import Grid from "@mui/material/Grid2";
 import data from "./data.json";
-import * as htmlToImage from 'html-to-image';
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
+import { toPng } from 'html-to-image';
 
 class Ongeki extends Component {
   constructor(props) {

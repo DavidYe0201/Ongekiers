@@ -10,7 +10,6 @@ import "./App.css";
 const KamaiWithRouter = withRouterParams(Kamai);
 const LeaderboardWithRouter = withRouterParams(Leaderboard);
 const ScoreSimulatorWithRouter = withRouterParams(ScoreSimulator);
-const NavbarWithRouter = withRouterParams(Navbar);
 
 function App() {
   return (
