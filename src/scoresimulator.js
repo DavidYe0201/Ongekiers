@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 class ScoreSimulator extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      values: this.props?.values,
       critical: 0,
       break: 0,
       hit: 0,
@@ -20,6 +20,7 @@ class ScoreSimulator extends Component {
   }
 
   componentDidUpdate() {
+
     let notePercent =
       this.state.critical * 1 +
       this.state.break * 0.9 +

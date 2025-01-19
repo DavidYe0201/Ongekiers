@@ -7,6 +7,7 @@ class Ongeki extends Component {
   constructor(props) {
     super(props);
     this.ref = createRef();
+    this.getSong = this.getSong.bind(this);
     this.state = {
       scores: [],
       recents: [],
@@ -202,6 +203,10 @@ class Ongeki extends Component {
     return grid;
   };
 
+
+  getSong = (e) => {
+  }
+
   gridCreation = (i) => {
     let allJson = this.test();
     if (allJson === null) return null;
@@ -244,6 +249,10 @@ class Ongeki extends Component {
     };
 
     for (let i = 0; i < bestRow.length; i++) {
+      let testArray = []
+      testArray.push("apple")
+
+      console.log("apple", testArray)
       gridRow.push(
         <div style={divStyle}>
           <div
@@ -254,8 +263,10 @@ class Ongeki extends Component {
               width: "150px",
               float: "left",
             }}
+
+            onClick={() => this.getSong(bestRow[i])}
           ></div>
-          <Grid item xs={12 / 5} style={mystyle}>
+          <Grid item xs={12 / 5} style={mystyle} >
             {bestRow[i]}
           </Grid>
         </div>
