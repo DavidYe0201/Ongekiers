@@ -73,9 +73,6 @@ class ScoreSimulator extends Component {
 
     return (
       <div>
-        <button>
-            <Link to="/">Back</Link>
-        </button>        
         <form style={divStyle}>
           <label>Critical Break</label>
           <input
