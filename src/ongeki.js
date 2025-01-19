@@ -236,12 +236,21 @@ class Ongeki extends Component {
   getSong = (e) => {
     let arr = e[0].concat(e[1])
     let arr2 = arr.concat(e[2])
-    console.log("arr2", arr2)
     this.setState({
       values: arr2
     });
     this.setState({calledScore: true})
   }
+
+
+  MouseOver(event) {
+    event.target.style.opacity = '50%';
+  }
+  MouseOut(event){
+    event.target.style.opacity = '100%';
+
+  }
+
 
   gridCreation = (i) => {
     let allJson = this.test();
@@ -284,6 +293,7 @@ class Ongeki extends Component {
       color: "#fff",
       textShadow: "1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000",
       float: "right",
+      
     };
 
     const divStyle = {
@@ -295,16 +305,15 @@ class Ongeki extends Component {
     
     for (let i = 0; i < bestRow.length; i++) {
       gridRow.push(
-        <div style={divStyle}>
+        <div style={divStyle} onClick={() => this.getSong(scoreRow[i])} onMouseOver={this.MouseOver} onMouseOut={this.MouseOut}>
           <div
             style={{
               backgroundImage: `url(${process.env.PUBLIC_URL}/img/cover-m/${json[i].image})`,
               backgroundSize: "contain",
               height: "150px",
               width: "150px",
-              float: "left",
+              float: "left"
             }}
-            onClick={() => this.getSong(scoreRow[i])}
           ></div>
           <Grid item xs={12 / 5} style={mystyle} >
             {bestRow[i]}
