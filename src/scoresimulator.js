@@ -4,7 +4,7 @@ class ScoreSimulator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      values: this.props?.values,
+      values: null,
       critical: 0,
       break: 0,
       hit: 0,
@@ -16,11 +16,26 @@ class ScoreSimulator extends Component {
       chart: 1,
       score2: 0,
       rating: 0,
+      userName: null,
+      version: null
     };
   }
 
+  componentDidMount() {
+    if (this.props.values !== undefined) {
+      this.setState({
+        critical: this.props.values[0],
+        break: this.props.values[1],
+        hit: this.props.values[2],
+        miss: this.props.values[3],
+        bell: this.props.values[4],
+        totalBell: this.props.values[5],
+        damage: this.props.values[6],
+        chart: this.props.values[7]
+      })
+    }
+  }
   componentDidUpdate() {
-
     let notePercent =
       this.state.critical * 1 +
       this.state.break * 0.9 +
@@ -64,6 +79,11 @@ class ScoreSimulator extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleBack = () => {
+    //hacky solution I love react! 
+   window.location = `https://ongekiers.netlify.app/${this.props.userName}/${this.props.version}`
+  }
+
   render() {
     const divStyle = {
       display: "grid",
@@ -71,9 +91,13 @@ class ScoreSimulator extends Component {
       textAlign: "center",
       padding: "10px",
     };
-
+    let backButton;
+    if (this.props.value !== null) {
+      backButton = <button onClick={this.handleBack}>Back</button>
+    }
     return (
       <div>
+        {backButton}
         <form style={divStyle}>
           <label>Critical Break</label>
           <input

@@ -2,7 +2,7 @@ import React, { Component, createRef  } from "react";
 import Grid from "@mui/material/Grid2";
 import data from "./data.json";
 import { toPng } from 'html-to-image';
-
+import ScoreSimulator from "./scoresimulator";
 class Ongeki extends Component {
   constructor(props) {
     super(props);
@@ -14,7 +14,10 @@ class Ongeki extends Component {
       error: null,
       userName: '',
       version: null,
-      recentScore: null
+      recentScore: null,
+      values: 0,
+      calledScore: false,
+      backButton: []
     };
   }
 
@@ -42,6 +45,28 @@ class Ongeki extends Component {
     }
   }
 
+  getJudgetmentData = (data) => {
+    let array = []
+    Object.keys(data).forEach(function(key) {
+      array.push(data[key])
+    })
+    //crit, break, hit, miss 
+    return array
+  }
+
+  getBellData = (data) => {
+    let array = []
+    Object.keys(data).forEach(function(key) {
+      array.push(data[key])
+    })
+    let arr = []
+    //bell, total, dmg 
+    arr.push(array[2])
+    arr.push(array[3])
+    arr.push(array[4])
+    return arr
+
+  }
   createSongJson = (i, json) => {
     let newEntry = {};
     newEntry.songName = json[i].song.title;
@@ -54,6 +79,8 @@ class Ongeki extends Component {
     newEntry.timeStamp = new Date(
       json[i].score.timeAchieved
     ).toLocaleDateString("en-US");
+    newEntry.scoreData = this.getJudgetmentData(json[i].score.scoreData.judgements)
+    newEntry.bellData = this.getBellData(json[i].score.scoreData.optional)
     return newEntry;
   };
 
@@ -174,6 +201,8 @@ class Ongeki extends Component {
   };
 
   scoreCreation = () => {
+
+    //test 
     let allJson = this.test();
     if (allJson === null) return null;
     let scores = [];
@@ -205,6 +234,13 @@ class Ongeki extends Component {
 
 
   getSong = (e) => {
+    let arr = e[0].concat(e[1])
+    let arr2 = arr.concat(e[2])
+    console.log("arr2", arr2)
+    this.setState({
+      values: arr2
+    });
+    this.setState({calledScore: true})
   }
 
   gridCreation = (i) => {
@@ -212,6 +248,7 @@ class Ongeki extends Component {
     if (allJson === null) return null;
     let json = allJson[i];
     const bestRow = [];
+    const scoreRow = []
     for (let i = 0; i < json.length; i++) {
       let oneSong = [];
       oneSong.push("Title: ", json[i].songName);
@@ -228,9 +265,16 @@ class Ongeki extends Component {
       oneSong.push(<br />);
       oneSong.push(json[i].fullCombo);
       oneSong.push(<br />);
+
       bestRow.push(oneSong);
+      let scoreSong = []
+      scoreSong.push(json[i].scoreData)
+      scoreSong.push(json[i].bellData)
+      scoreSong.push(json[i].chartRating)
+      scoreRow.push(scoreSong)
     }
 
+    
     const gridRow = [];
     const mystyle = {
       border: "solid",
@@ -248,11 +292,8 @@ class Ongeki extends Component {
       display: "flex",
     };
 
+    
     for (let i = 0; i < bestRow.length; i++) {
-      let testArray = []
-      testArray.push("apple")
-
-      console.log("apple", testArray)
       gridRow.push(
         <div style={divStyle}>
           <div
@@ -263,13 +304,13 @@ class Ongeki extends Component {
               width: "150px",
               float: "left",
             }}
-
-            onClick={() => this.getSong(bestRow[i])}
+            onClick={() => this.getSong(scoreRow[i])}
           ></div>
           <Grid item xs={12 / 5} style={mystyle} >
             {bestRow[i]}
           </Grid>
         </div>
+
       );
     }
     return gridRow;
@@ -319,6 +360,16 @@ class Ongeki extends Component {
   render() {
     const apiState = this.props.scores;
     const apiState2 = this.props.recents;
+    if (this.state.calledScore) {
+      return (
+        <ScoreSimulator
+          values={this.state.values}
+          userName={this.props.userName}
+          version={this.props.version}
+        >
+        </ScoreSimulator>
+      )
+    }
     if (apiState.length === 0 || apiState2.length === 0) {
       return <p>Loading...</p>;
     } else {
@@ -375,6 +426,8 @@ class Ongeki extends Component {
         </div>
       );
     }
+
+
   }
 }
 
