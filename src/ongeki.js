@@ -10,10 +10,10 @@ class Ongeki extends Component {
     this.state = {
       scores: [],
       recents: [],
-      isLoading: true,
       error: null,
-      userName: null,
+      userName: '',
       version: null,
+      recentScore: null
     };
   }
 
@@ -172,7 +172,7 @@ class Ongeki extends Component {
     return allJson;
   };
 
-  scoreCreation = (i) => {
+  scoreCreation = () => {
     let allJson = this.test();
     if (allJson === null) return null;
     let scores = [];
@@ -180,6 +180,10 @@ class Ongeki extends Component {
     scores.push(allJson[4].toFixed(2));
     scores.push(allJson[5].toFixed(2));
     scores.push(allJson[6].toFixed(2));
+    if (this.state.recentScore === null) {
+      this.setState({recentScore: allJson[5].toFixed(2)})
+
+    }
     return scores;
   };
 
@@ -284,7 +288,7 @@ class Ongeki extends Component {
     if (current === null) {
       return;
     }
-    toPng(current, { cacheBust: true, backgroundColor: "#282c34" })
+    toPng(current, {  backgroundColor: "#282c34" })
       .then((dataUrl) => {
         const link = document.createElement('a');
         link.download = this.props.userName + 'OngekiScore' + Date.now() + '.jpeg';

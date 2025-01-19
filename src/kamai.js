@@ -7,7 +7,6 @@ class Kamai extends Component {
     this.state = {
       scores: [],
       recents: [],
-      isLoading: true,
       error: null,
       userName: null,
       value: null,
@@ -111,7 +110,6 @@ class Kamai extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({
-      submitted: true,
       errorUsername: null,
     });
     let standardizedVersion = this.handleVersion(this.state.version, "pretty");
@@ -122,14 +120,13 @@ class Kamai extends Component {
     this.setState({
       scores: [],
       recents: [],
-      isLoading: true,
       error: null,
-      userName: null,
+      userName: '',
       value: null,
       version: "bright MEMORY Act.3",
-      errorUsername: null,
+      errorUsername: '',
     });
-    this.props.navigate(`/`);
+//    this.props.navigate(`/`);
   };
 
   render() {
@@ -161,7 +158,7 @@ class Kamai extends Component {
             Enter username:
             <input
               type="text"
-              value={this.state.userName}
+              value={this.state.userName == null? '' : this.state.userName}
               onChange={this.handleChange}
             />
           </label>

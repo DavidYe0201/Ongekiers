@@ -6,12 +6,26 @@ import IconButton from '@mui/material/IconButton';
 import { Link } from "react-router-dom";
 
 class Navbar extends Component {
+
+    handleBack = (e) => {
+        this.setState({
+          scores: [],
+          recents: [],
+          error: null,
+          userName: null,
+          value: null,
+          version: "bright MEMORY Act.3",
+          errorUsername: null,
+        });
+        this.props.navigate(`/`);
+      };
+    
     render() {
         return (
             <div>
             <AppBar position="fixed" sx={{ bgcolor: "#43454a" }}>
             <Toolbar>
-            <Link to="/">
+            <Link to="/" onClick={this.handleBack}>
                 <IconButton
                     size="large"
                     edge="start"
