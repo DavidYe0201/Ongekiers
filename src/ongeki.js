@@ -201,8 +201,6 @@ class Ongeki extends Component {
   };
 
   scoreCreation = () => {
-
-    //test 
     let allJson = this.test();
     if (allJson === null) return null;
     let scores = [];
@@ -232,12 +230,10 @@ class Ongeki extends Component {
     return grid;
   };
 
-
   getSong = (e) => {
-    let arr = e[0].concat(e[1])
-    let arr2 = arr.concat(e[2])
+    let arr = e[0].concat(e[1]).concat(e[2]).concat(e[3])
     this.setState({
-      values: arr2
+      values: arr
     });
     this.setState({calledScore: true})
   }
@@ -280,6 +276,8 @@ class Ongeki extends Component {
       scoreSong.push(json[i].scoreData)
       scoreSong.push(json[i].bellData)
       scoreSong.push(json[i].chartRating)
+      scoreSong.push(json[i].score)
+
       scoreRow.push(scoreSong)
     }
 

@@ -17,7 +17,8 @@ class ScoreSimulator extends Component {
       score2: 0,
       rating: 0,
       userName: null,
-      version: null
+      version: null,
+      score2Once: false
     };
   }
 
@@ -31,8 +32,9 @@ class ScoreSimulator extends Component {
         bell: this.props.values[4],
         totalBell: this.props.values[5],
         damage: this.props.values[6],
-        chart: this.props.values[7]
-      })
+        chart: this.props.values[7],
+        score2: this.props.values[8]
+    })
     }
   }
   componentDidUpdate() {
@@ -66,11 +68,12 @@ class ScoreSimulator extends Component {
       musicRate = (this.state.score2 - 970000) / 17500;
     }
     musicRate += this.state.chart * 1;
+
     if (totalScore !== this.state.score && !isNaN(totalScore)) {
       this.setState({ score: totalScore });
     }
 
-    if (musicRate !== this.state.rating) {
+    if ((musicRate !== this.state.rating) && !isNaN(musicRate)) {
       this.setState({ rating: musicRate });
     }
   }
@@ -92,7 +95,7 @@ class ScoreSimulator extends Component {
       padding: "10px",
     };
     let backButton;
-    if (this.props.value !== null) {
+    if (this.props.values !== undefined) {
       backButton = <button onClick={this.handleBack}>Back</button>
     }
     return (
