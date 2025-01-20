@@ -63,7 +63,7 @@ class Ongeki extends Component {
     //bell, total, dmg 
     arr.push(array[2])
     arr.push(array[3])
-    arr.push(array[4])
+    arr.push(array[0])
     return arr
 
   }
@@ -317,7 +317,6 @@ class Ongeki extends Component {
             {bestRow[i]}
           </Grid>
         </div>
-
       );
     }
     return gridRow;
@@ -333,11 +332,10 @@ class Ongeki extends Component {
     const para = document.createElement("p");
     const para2 = document.createElement("p");
     const para3 = document.createElement("p");
-
     para.style.cssText = "font-size:15px;text-align:left"
     para2.style.cssText = "font-size:15px;text-align:left"
     para.innerText = "Generated on https://ongekiers.netlify.app/";
-    para2.innerText = "I'm ngl I have no idea how to calculate the recent score so it's not in the image but my calculated score is " + this.state.recentScore
+    para2.innerText = "I'm ngl I have no idea how to calculate the recent score so it's not in the image recent calculated score is " + this.state.recentScore
     para3.innerText = this.props.userName
     document.getElementById("imageDiv").prepend(para2);
     document.getElementById("imageDiv").prepend(para);
