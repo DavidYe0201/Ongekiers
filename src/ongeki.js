@@ -61,9 +61,10 @@ class Ongeki extends Component {
     })
     let arr = []
     //bell, total, dmg 
+    console.log("data", data)
     arr.push(array[2])
     arr.push(array[3])
-    arr.push(array[0])
+    arr.push(array[4])
     return arr
 
   }
