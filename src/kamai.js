@@ -10,7 +10,7 @@ class Kamai extends Component {
       error: null,
       userName: null,
       value: null,
-      version: "bright MEMORY Act.3",
+      version: "オンゲキ bright MEMORY Act.3",
       errorUsername: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,12 +19,12 @@ class Kamai extends Component {
   handleVersion = (urlVersion, type) => {
     // Switch between version strings for use in calling API or formatting in URL
     const versionMap = {
-      "1": { formatted: "bright MEMORY Act.1", pretty: "act1" },
-      "2": { formatted: "bright MEMORY Act.2", pretty: "act2" },
-      "3": { formatted: "bright MEMORY Act.3", pretty: "act3" },
+      "1": { formatted: "オンゲキ bright MEMORY Act.1", pretty: "act1" },
+      "2": { formatted: "オンゲキ bright MEMORY Act.2", pretty: "act2" },
+      "3": { formatted: "オンゲキ bright MEMORY Act.3", pretty: "act3" },
     };
 
-    let result = { formatted: "bright MEMORY Act.3", pretty: "act3" };
+    let result = { formatted: "オンゲキ bright MEMORY Act.3", pretty: "act3" };
 
     Object.keys(versionMap).forEach((key) => {
       if (urlVersion.includes(key)) {
@@ -123,7 +123,7 @@ class Kamai extends Component {
       error: null,
       userName: '',
       value: null,
-      version: "bright MEMORY Act.3",
+      version: "オンゲキ bright MEMORY Act.3",
       errorUsername: '',
     });
 //    this.props.navigate(`/`);
@@ -167,9 +167,9 @@ class Kamai extends Component {
               value={this.state.version}
               onChange={this.handleSelectChange}
             >
-              <option value="bright MEMORY Act.3">Act 3</option>
-              <option value="bright MEMORY Act.2">Act 2</option>
-              <option value="bright MEMORY Act.1">Act 1</option>
+              <option value="オンゲキ bright MEMORY Act.3">Act 3</option>
+              <option value="オンゲキ bright MEMORY Act.2">Act 2</option>
+              <option value="オンゲキ bright MEMORY Act.1">Act 1</option>
             </select>
           </label>
           <button onClick={this.apiCall} type="submit">

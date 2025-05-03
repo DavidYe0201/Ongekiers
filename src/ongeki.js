@@ -61,7 +61,6 @@ class Ongeki extends Component {
     })
     let arr = []
     //bell, total, dmg 
-    console.log("data", data)
     arr.push(array[2])
     arr.push(array[3])
     arr.push(array[4])
@@ -82,6 +81,8 @@ class Ongeki extends Component {
     ).toLocaleDateString("en-US");
     newEntry.scoreData = this.getJudgetmentData(json[i].score.scoreData.judgements)
     newEntry.bellData = this.getBellData(json[i].score.scoreData.optional)
+    console.log("new entry", newEntry)
+
     return newEntry;
   };
 
@@ -152,6 +153,8 @@ class Ongeki extends Component {
 
     let set3 = new Set();
     for (let i = 0; i < combinedJson.length; i++) {
+      console.log("latest ver:", latestVersion)
+      console.log("ver:", combinedJson[i].chart.data.displayVersion)
       if (
         combinedJson[i].chart.data.displayVersion === latestVersion &&
         latestJson.length !== 15 &&
@@ -404,7 +407,7 @@ class Ongeki extends Component {
                 value={this.state.version}
                 onChange={this.handleSelectChange}
                 >
-                <option value="bright MEMORY Act.3">Act 3</option>
+                <option value="オンゲキ bright MEMORY Act.3">Act 3</option>
                 <option value="bright MEMORY Act.2">Act 2</option>
                 <option value="bright MEMORY Act.1">Act 1</option>
                 </select>
