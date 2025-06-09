@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Ongeki from "./ongeki.js";
+import OngekiRefresh from "./OngekiRefresh.js";
 
 class Kamai extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ class Kamai extends Component {
       error: null,
       userName: null,
       value: null,
-      version: "オンゲキ bright MEMORY Act.3",
+      version: "オンゲキ Re:Fresh",
       errorUsername: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,9 +23,11 @@ class Kamai extends Component {
       "1": { formatted: "オンゲキ bright MEMORY Act.1", pretty: "act1" },
       "2": { formatted: "オンゲキ bright MEMORY Act.2", pretty: "act2" },
       "3": { formatted: "オンゲキ bright MEMORY Act.3", pretty: "act3" },
+      "4": { formatted: "オンゲキ Re:Fresh", pretty: "refresh" },
+
     };
 
-    let result = { formatted: "オンゲキ bright MEMORY Act.3", pretty: "act3" };
+    let result = { formatted: "オンゲキ Re:Fresh", pretty: "refresh" };
 
     Object.keys(versionMap).forEach((key) => {
       if (urlVersion.includes(key)) {
@@ -54,7 +57,7 @@ class Kamai extends Component {
   }
 
   componentDidUpdate() {
-    let versions = ["act1", "act2", "act3"]; // Update version param in URL if formatted differently than actx
+    let versions = ["act1", "act2", "act3", "refresh"]; // Update version param in URL if formatted differently than actx
 
     if (
       this.props.params.version &&
@@ -141,13 +144,13 @@ class Kamai extends Component {
         errorMessage = `Error, current user does not exist in the database.`;
       } else {
         return (
-          <Ongeki
+          <OngekiRefresh
             scores={this.state.scores}
             handleBack={this.handleBack}
             recents={this.state.recents}
             version={this.state.version}
             userName={this.state.userName}
-          ></Ongeki>
+          ></OngekiRefresh>
         );
       }
     }
@@ -167,6 +170,7 @@ class Kamai extends Component {
               value={this.state.version}
               onChange={this.handleSelectChange}
             >
+              <option value="オンゲキ Re:Fresh">Refresh</option>
               <option value="オンゲキ bright MEMORY Act.3">Act 3</option>
               <option value="オンゲキ bright MEMORY Act.2">Act 2</option>
               <option value="オンゲキ bright MEMORY Act.1">Act 1</option>

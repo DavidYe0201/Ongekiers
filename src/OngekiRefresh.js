@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid2";
 import data from "./data.json";
 import { toPng } from 'html-to-image';
 import ScoreSimulator from "./scoresimulator";
-class Ongeki extends Component {
+class OngekiRefresh extends Component {
   constructor(props) {
     super(props);
     this.ref = createRef();
@@ -155,12 +155,14 @@ class Ongeki extends Component {
     for (let i = 0; i < combinedJson.length; i++) {
       if (
         combinedJson[i].chart.data.displayVersion === latestVersion &&
-        latestJson.length !== 15 &&
+        latestJson.length !== 10 &&
         !set3.has(combinedJson[i].score.songID)
       ) {
         set3.add(combinedJson[i].score.songID);
         latestJson.push(this.createSongJson(i, combinedJson));
         latestVersionArray.push(combinedJson[i].score.calculatedData.rating);
+
+        console.log("Latest LENGTH", latestVersionArray.length)
       }
     }
 
@@ -180,7 +182,7 @@ class Ongeki extends Component {
     const recentDataJson = this.combineRecentJson(this.state.recents);
     let set5 = new Set();
     for (let i = 0; i < recentDataJson.length; i++) {
-      if (recentArray.length !== 10) {
+      if (recentArray.length !== 50) {
         set5.add(recentDataJson[i].score.songID);
         recentJson.push(this.createSongJson(i, recentDataJson));
         recentArray.push(recentDataJson[i].score.calculatedData.rating);
@@ -188,7 +190,7 @@ class Ongeki extends Component {
     }
 
     let bestSum = bestArray.reduce((a, b) => a + b, 0) / 30;
-    let latestSum = latestVersionArray.reduce((a, b) => a + b, 0) / 15;
+    let latestSum = latestVersionArray.reduce((a, b) => a + b, 0) / 10;
     let recentSum = recentArray.reduce((a, b) => a + b, 0) / 10;
     let totalScore = (bestSum + latestSum + recentSum) / 3;
     const allJson = [];
@@ -426,7 +428,7 @@ class Ongeki extends Component {
           </Grid>
 
         </div>
-          <p style={{ textAlign: "left" }}>Recent: {scores[2]}</p>
+          <p style={{ textAlign: "left" }}>P-Score: {scores[2]}</p>
           <Grid container spacing={2}>
             {recent}
           </Grid>
@@ -438,4 +440,4 @@ class Ongeki extends Component {
   }
 }
 
-export default Ongeki;
+export default OngekiRefresh;
