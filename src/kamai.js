@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Ongeki from "./ongeki.js";
+// import Ongeki from "./ongeki.js";
 import OngekiRefresh from "./OngekiRefresh.js";
 
 class Kamai extends Component {
