@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-// import Ongeki from "./ongeki.js";
-import OngekiRefresh from "./OngekiRefresh.js";
+import Ongeki from "./ongeki.js";
+// import OngekiRefresh from "./OngekiRefresh.js";
 
 class Kamai extends Component {
   constructor(props) {
@@ -144,13 +144,13 @@ class Kamai extends Component {
         errorMessage = `Error, current user does not exist in the database.`;
       } else {
         return (
-          <OngekiRefresh
+          <Ongeki
             scores={this.state.scores}
             handleBack={this.handleBack}
             recents={this.state.recents}
             version={this.state.version}
             userName={this.state.userName}
-          ></OngekiRefresh>
+          ></Ongeki>
         );
       }
     }
