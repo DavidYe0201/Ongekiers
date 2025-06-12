@@ -45,6 +45,12 @@ class Navbar extends Component {
                     </Button>
                 </Link>
 
+                <Link to="/scoresimulatorv2" style={{ textDecoration: 'none' }}>
+                    <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                        Score Simulator Refresh
+                    </Button>
+                </Link>
+
             </Toolbar>
         </AppBar>
         <Toolbar />

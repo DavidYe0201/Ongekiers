@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.vertical-radio-buttons label {
+  display: block; /* Stacks labels vertically */
+  margin-bottom: 10px; /* Optional spacing */
+}
+
+.divStyle {
+  display: grid;
+  border-style: solid;
+  text-align: center;
+  padding: 10px;
+}

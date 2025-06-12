@@ -1,6 +1,7 @@
 import Kamai from "./kamai.js";
 import Leaderboard from "./leaderboard.js";
 import ScoreSimulator from "./scoresimulator.js";
+import ScoreSimulatorV2 from "./scoresimulatorV2.js";
 
 import withRouterParams from "./withRouterParams";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -10,6 +11,7 @@ import "./App.css";
 const KamaiWithRouter = withRouterParams(Kamai);
 const LeaderboardWithRouter = withRouterParams(Leaderboard);
 const ScoreSimulatorWithRouter = withRouterParams(ScoreSimulator);
+const ScoreSimulatorWithRouterV2 = withRouterParams(ScoreSimulatorV2);
 
 function App() {
   return (
@@ -24,6 +26,10 @@ function App() {
             <Route
               path="/scoresimulator"
               element={<ScoreSimulatorWithRouter />}
+            />
+                        <Route
+              path="/scoresimulatorv2"
+              element={<ScoreSimulatorWithRouterV2 />}
             />
           </Routes>
         </Router>
