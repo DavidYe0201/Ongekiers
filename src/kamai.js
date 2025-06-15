@@ -142,7 +142,23 @@ class Kamai extends Component {
     ) {
       if (!this.state.scores?.success && !this.state.scores.recents?.success) {
         errorMessage = `Error, current user does not exist in the database.`;
-      } else {
+      } 
+      
+      if (this.state.version !== "オンゲキ Re:Fresh") {
+        return (
+          <Ongeki
+          scores={this.state.scores}
+          handleBack={this.handleBack}
+          recents={this.state.recents}
+          version={this.state.version}
+          userName={this.state.userName}
+        ></Ongeki>
+        )
+
+      }
+
+
+      else {
         return (
           <Ongeki
             scores={this.state.scores}
@@ -156,6 +172,11 @@ class Kamai extends Component {
     }
     return (
       <div>
+        <img
+        src="https://media1.tenor.com/m/PsVmETQDIHYAAAAd/new-york-ongeki.gif"
+        alt="ongekichan"
+        >
+        </img>
         <form onSubmit={this.handleSubmit}>
           <label>
             Enter username:
