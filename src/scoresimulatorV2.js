@@ -121,19 +121,29 @@ class ScoreSimulatorV2 extends Component {
     if (platinumRating !== this.state.platinumRating && !isNaN(platinumRating)) {
       this.setState({ platinumRating: platinumRating });
     }
+
+    let technicalRank;
+    if (this.state.score != null) {
+      if (this.state.score >= 1007500)
+        technicalRank = "SSS+"
+      else if ((this.state.score < 1007500) && (this.state.score >= 1000000))
+        technicalRank = "SSS"
+      else if ((this.state.score < 1000000) && (this.state.score >= 990000))
+        technicalRank = "SS"
+
+      }
+    
+      if ((technicalRank !== null) && (this.state.technicalRankBonus !== technicalRank)) {
+        this.setState(() => ({
+          technicalRankBonus: this.state.technicalRankBonus === technicalRank ? null : technicalRank
+        }));      
+      }
   }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleTechnicalRadio = (e) => {
-    const value = e.target.value;
-    this.setState(() => ({
-      technicalRankBonus: this.state.technicalRankBonus === value ? null : value
-    }));
-  }
-  
   handleClearRadio = (e) => {
     const value = e.target.value;
     this.setState(() => ({
@@ -177,7 +187,7 @@ class ScoreSimulatorV2 extends Component {
       padding: "10px",
     };
 
-    let { technicalRankBonus, clearBadge } = this.state;
+    let { clearBadge } = this.state;
 
     return ( 
       <div>
@@ -198,23 +208,6 @@ class ScoreSimulatorV2 extends Component {
                 value={this.state.score}
                 onChange={this.handleChange}
               />
-
-            <div className="vertical-radio-buttons">
-              Technical Rank
-              <label>
-                  SSS+
-                  <input type="radio" name="technicalRankBonus" value="SSS+" checked={technicalRankBonus === "SSS+"} onClick={this.handleTechnicalRadio} readOnly/>
-              </label>
-              <label>
-                  SSS
-                  <input type="radio" name="technicalRankBonus" value="SSS" checked={technicalRankBonus === "SSS"} onClick={this.handleTechnicalRadio} readOnly/> 
-              </label>
-              <label>
-                  SS
-                  <input type="radio" name="technicalRankBonus" value="SS" checked={technicalRankBonus === "SS"} onClick={this.handleTechnicalRadio} readOnly/>
-              </label>
-            </div>
-
 
             <div className="vertical-radio-buttons">
               Clear Badge

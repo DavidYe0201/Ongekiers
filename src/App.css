@@ -12,10 +12,13 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+body {
+  background-color: #282c34;
+
+}
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,4 +50,23 @@
   border-style: solid;
   text-align: center;
   padding: 10px;
+}
+
+input {
+  padding: 10px 10px;
+  border-radius: 15px; 
+  margin: 5px;
+  box-sizing: border-box;
+}
+
+select {
+  padding: 10px 20px;
+  border-radius: 15px; 
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 15px; 
+  box-sizing: border-box;
 }
