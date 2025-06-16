@@ -81,8 +81,6 @@ class Ongeki extends Component {
     ).toLocaleDateString("en-US");
     newEntry.scoreData = this.getJudgetmentData(json[i].score.scoreData.judgements)
     newEntry.bellData = this.getBellData(json[i].score.scoreData.optional)
-    console.log("new entry", newEntry)
-
     return newEntry;
   };
 
@@ -258,7 +256,8 @@ class Ongeki extends Component {
     const scoreRow = []
     for (let i = 0; i < json.length; i++) {
       let oneSong = [];
-      oneSong.push("Title: ", json[i].songName);
+      oneSong.push(json[i].songName);
+      oneSong.push(<br />);
       oneSong.push(<br />);
       oneSong.push("Level: ", json[i].chartRating);
       oneSong.push(<br />);
@@ -282,45 +281,53 @@ class Ongeki extends Component {
 
       scoreRow.push(scoreSong)
     }
-
     
     const gridRow = [];
-    const mystyle = {
-      border: "solid",
+    const textStyle = {
       height: "150px",
       width: "100px",
       fontSize: "12px",
-      color: "#fff",
       textShadow: "1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000",
       float: "right",
-      
+      borderRadius: "5px",
+      top: "50%"
     };
 
-    const divStyle = {
-      height: "150px",
-      width: "250px",
-      display: "flex",
+    const eachGridStyle = {
+      maxHeight: "150px",
+      maxWidth: "300px",
+      border: "solid 2px",
+      borderRadius: "15px",
+      boxSizing: "borderBox", 
+      margin: "5px",
+      overflow: "hidden"
+
     };
 
     
+    
     for (let i = 0; i < bestRow.length; i++) {
       gridRow.push(
-        <div style={divStyle} onClick={() => this.getSong(scoreRow[i])} onMouseOver={this.MouseOver} onMouseOut={this.MouseOut}>
+        <div class="test" style={eachGridStyle} onClick={() => this.getSong(scoreRow[i])} onMouseOver={this.MouseOver} onMouseOut={this.MouseOut}>
           <div
             style={{
               backgroundImage: `url(${process.env.PUBLIC_URL}/img/cover-m/${json[i].image})`,
               backgroundSize: "contain",
               height: "150px",
               width: "150px",
-              float: "left"
+              float: "left",
+
+              borderRadius: "15px",
+              boxSizing: "borderBox"
             }}
           ></div>
-          <Grid item xs={12 / 5} style={mystyle} >
+          <Grid style={textStyle} >
             {bestRow[i]}
           </Grid>
         </div>
       );
     }
+    
     return gridRow;
   };
 
@@ -415,21 +422,41 @@ class Ongeki extends Component {
 
 
         <div id="imageDiv" ref={this.ref} style={{padding: "5px"}}>
-        <p>Total: {scores[3]}</p>
+        <p style={{ textAlign: "left" }}> Total: {scores[3]}</p>
           <p style={{ textAlign: "left" }}>Best: {scores[0]}</p>
-          <Grid container spacing={2}>
-            {best}
-          </Grid>
+
+
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/5)), 1fr))',
+            }}
+          >
+          {best}
+          </div>
+
+
           <p style={{ textAlign: "left" }}>Latest: {scores[1]}</p>
-          <Grid container spacing={2}>
-            {latest}
-          </Grid>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/5)), 1fr))',
+            }}
+          >
+          {latest}
+          </div>
 
         </div>
           <p style={{ textAlign: "left" }}>Recent: {scores[2]}</p>
-          <Grid container spacing={2}>
-            {recent}
-          </Grid>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/5)), 1fr))',
+            }}
+          >
+          {best}
+          </div>
         </div>
       );
     }
